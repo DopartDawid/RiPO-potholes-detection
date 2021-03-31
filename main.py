@@ -1,0 +1,2 @@
+print("Witaj projekt RiPO")
+
