@@ -1,5 +1,13 @@
 import cv2 as cv
 
+class videoHandler():
+
+    def __init__(self, video_source):
+        self.video_capture = cv.VideoCapture(video_source)
+        self.frame = None
+
+    def video_compute(self):
+        pass
 
 def video_capture(video_input=0):
     cv.namedWindow('Pottholes detection')
