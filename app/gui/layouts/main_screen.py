@@ -1,6 +1,6 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.button import Button
-from app.videoAnalysis.video_handler import video_capture, get_cameras
+from app.videoAnalysis.video_handler import get_cameras
 from kivy.uix.spinner import Spinner
 
 
@@ -27,15 +27,12 @@ class MainScreen(Screen):
             chosen_camera_id = int(chosen_camera_id)
         else:
             chosen_camera_id = 1
-        print(chosen_camera_id)
+        self.manager.video_source = chosen_camera_id
         self.changer()
-        video_capture(chosen_camera_id)
 
     def file_btn_handler(self, instance):
-        print(self, instance)
+        self.manager.video_source = ".\proba.mp4"
         self.changer()
-        video_capture(".\proba.mp4")
-
 
     def changer(self, *args):
         self.manager.current = 'screen2'

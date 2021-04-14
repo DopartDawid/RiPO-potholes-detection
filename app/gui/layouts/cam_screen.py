@@ -1,31 +1,45 @@
 from kivy.uix.screenmanager import Screen
+from app.videoAnalysis.video_handler import VideoHandler
+from kivy.uix.image import Image
+from kivy.clock import Clock
 from kivy.uix.button import Button
-from app.videoAnalysis.video_handler import video_capture, get_cameras
-from kivy.uix.spinner import Spinner
+from kivy.graphics.texture import Texture
+import cv2 as cv
 
 
 class CamScreen(Screen):
     def __init__(self, **kwargs):
         super(CamScreen, self).__init__(**kwargs)
-        self.file_btn = Button(text="Template", pos=(200, 250), size_hint=(.15, .10))
-        self.file_btn.bind(on_press=self.file_btn_handler)
-        self.camera_btn = Button(text="sample text", pos=(300, 350), size_hint=(.25, .18))
-        self.camera_btn.bind(on_press=self.camera_btn_callback)
+        self.img = Image()
 
-        self.spinner = Spinner(text="camera",
-                               values=(f'Camera {cam_id}' for cam_id in get_cameras()),
-                               size_hint=(0.3, 0.2),
-                               pos_hint={'x': .1, 'y': .8})
+        self.quit_btn = Button(text=" X ", pos=(.9, .9), size_hint=(.1, .1))
+        self.quit_btn.bind(on_press=self.changer)
 
-        self.add_widget(self.camera_btn)
-        self.add_widget(self.file_btn)
-        self.add_widget(self.spinner)
+        self.add_widget(self.img)
+        self.add_widget(self.quit_btn)
 
-    def camera_btn_callback(self, instance):
-        self.changer()
+        self.video = None
+        self.event = None
 
-    def file_btn_handler(self, instance):
-        self.changer()
+    def on_enter(self, *args):
+        self.video = VideoHandler(self.manager.video_source)
+        self.event = Clock.schedule_interval(self.update, 1.0/self.video.capture.get(cv.CAP_PROP_FPS))
+
+    def update(self, dt):
+        ret_val, frame = self.video.get_frame()
+        if ret_val is False or frame is None:
+            self.changer()
+            return
+        buf1 = cv.flip(frame, 0)
+        buf = buf1.tostring()
+        texture1 = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
+        texture1.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+        self.img.texture = texture1
 
     def changer(self, *args):
+        self.video.capture.release()
+        self.event.cancel()
         self.manager.current = 'screen1'
+
+
+

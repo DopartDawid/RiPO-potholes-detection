@@ -21,5 +21,4 @@ class LayoutManager(FloatLayout):
         self.screen_manager.add_widget(MainScreen(name='screen1'))
         self.screen_manager.add_widget(CamScreen(name='screen2'))
 
-
-
+        self.screen_manager.video_source = None
