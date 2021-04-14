@@ -8,9 +8,10 @@ def video_capture(video_input=0):
     cap = cv.VideoCapture(video_input)
     while True:
         ret_val, frame = cap.read()
-        cv.imshow('Pottholes detection', frame)
-        if cv.waitKey(1) & 0xFF == ord('q'):
+        if cv.waitKey(1) & 0xFF == ord('q') or ret_val is False:
             break
+        cv.imshow('Pottholes detection', frame)
+
     cap.release()
     cv.destroyAllWindows()
 
