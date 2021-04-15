@@ -19,11 +19,11 @@ class CamScreen(Screen):
         self.add_widget(self.quit_btn)
 
         self.video = None
-        self.event = None
+        self.clock_event = None
 
     def on_enter(self, *args):
         self.video = VideoHandler(self.manager.video_source)
-        self.event = Clock.schedule_interval(self.update, 1.0/self.video.capture.get(cv.CAP_PROP_FPS))
+        self.clock_event = Clock.schedule_interval(self.update, 1.0/self.video.capture.get(cv.CAP_PROP_FPS))
 
     def update(self, dt):
         ret_val, frame = self.video.get_frame()
@@ -38,7 +38,7 @@ class CamScreen(Screen):
 
     def changer(self, *args):
         self.video.capture.release()
-        self.event.cancel()
+        self.clock_event.cancel()
         self.manager.current = 'screen1'
 
 
