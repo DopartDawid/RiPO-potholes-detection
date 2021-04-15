@@ -45,13 +45,12 @@ class MainScreen(Screen):
         self.changer()
 
     def file_btn_handler(self, instance):
-        # self.manager.video_source = ".\proba.mp4"
         self.popup = Popup(title="File chooser",
                            size_hint=(None, None),
-                           size=(400, 400),
-                           auto_dismiss=False)
+                           size=(400, 400))
         self.popup.chosen_file = None
-        file_chooser = FileChooser(self.popup)
+        file_chooser = FileChooser(self.popup,
+                                   path='./data', filters=['*.mp4'], )
         self.popup.add_widget(file_chooser)
         self.popup.open()
 
