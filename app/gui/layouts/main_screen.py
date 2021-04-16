@@ -9,15 +9,18 @@ from kivy.uix.filechooser import FileChooserListView
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
-        self.file_btn = Button(text="Choose file", pos=(200, 250), size_hint=(.15, .10))
+        self.file_btn = Button(text="Choose file", pos_hint={'x': .6, 'y': .7}, size_hint=(.3, .2),
+                               background_color='lightslategray')
         self.file_btn.bind(on_press=self.file_btn_handler)
-        self.start_btn = Button(text="Start analyze", pos=(300, 350), size_hint=(.25, .18))
-        self.start_btn.bind(on_press=self.start_btn_callback)
 
         self.spinner = Spinner(text="Choose camera",
                                values=(f'Camera {cam_id}' for cam_id in get_cameras()),
-                               size_hint=(0.3, 0.2),
-                               pos_hint={'x': .1, 'y': .8})
+                               size_hint=(.3, .2),
+                               pos_hint={'x': .1, 'y': .7}, background_color='lightslategray')
+
+        self.start_btn = Button(text="Start analyze", pos_hint={'x': .3, 'y': .1}, size_hint=(.4, .2),
+                                background_color='lightslategray')
+        self.start_btn.bind(on_press=self.start_btn_callback)
 
         self.add_widget(self.start_btn)
         self.add_widget(self.file_btn)

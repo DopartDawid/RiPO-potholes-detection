@@ -10,9 +10,10 @@ import cv2 as cv
 class CamScreen(Screen):
     def __init__(self, **kwargs):
         super(CamScreen, self).__init__(**kwargs)
-        self.img = Image()
+        self.img = Image(size_hint=(1.0, 1.0), pos_hint={'x': .0, 'y': .0}, allow_stretch=True)
 
-        self.quit_btn = Button(text=" X ", pos=(.9, .9), size_hint=(.1, .1))
+        self.quit_btn = Button(text="Back", pos_hint={'x': .95, 'y': .95}, size_hint=(.05, .05),
+                               background_color='lightslategray')
         self.quit_btn.bind(on_press=self.changer)
 
         self.add_widget(self.img)
