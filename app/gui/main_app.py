@@ -7,13 +7,11 @@ from kivy.graphics import Color, Rectangle
 
 
 class MainApp(App):
-
     def build(self):
         return LayoutManager()
 
 
 class LayoutManager(FloatLayout):
-
     def __init__(self, **kwargs):
         super(LayoutManager, self).__init__(**kwargs)
         with self.canvas.before:

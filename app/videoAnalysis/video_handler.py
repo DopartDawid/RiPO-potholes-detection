@@ -2,11 +2,10 @@ import cv2 as cv
 
 
 class VideoHandler:
-
     def __init__(self, video_source):
         self.capture = cv.VideoCapture(video_source)
-        self.pothole_cascade = cv.CascadeClassifier("app/haarcascades/cascadeBigger31.xml")
-      #  self.pothole_cascade.load()
+        self.pothole_cascade = cv.CascadeClassifier(
+            "app/haarcascades/cascadeBigger20.xml")
 
     def get_frame(self):
         ret_val, frame = self.capture.read()
@@ -18,7 +17,7 @@ class VideoHandler:
 
         potholes = self.pothole_cascade.detectMultiScale(frame_gray)
         for (x, y, w, h) in potholes:
-            frame = cv.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+            frame = cv.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
         return frame
 
 
@@ -32,6 +31,3 @@ def get_cameras():
         else:
             break
     return available_cams
-
-
-
