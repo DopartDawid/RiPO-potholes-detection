@@ -31,6 +31,7 @@ class CamScreen(Screen):
         if ret_val is False or frame is None:
             self.changer()
             return
+        frame = self.video.detect_object(frame)
         buf1 = cv.flip(frame, 0)
         buf = buf1.tostring()
         texture1 = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')

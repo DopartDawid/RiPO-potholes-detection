@@ -18,7 +18,7 @@ class MainScreen(Screen):
                                size_hint=(.3, .2),
                                pos_hint={'x': .1, 'y': .7}, background_color='lightslategray')
 
-        self.start_btn = Button(text="Start analyze", pos_hint={'x': .3, 'y': .1}, size_hint=(.4, .2),
+        self.start_btn = Button(text="Start analysis", pos_hint={'x': .3, 'y': .1}, size_hint=(.4, .2),
                                 background_color='lightslategray')
         self.start_btn.bind(on_press=self.start_btn_callback)
 
