@@ -1,11 +1,13 @@
 import cv2 as cv
+from kivy.core.audio import SoundLoader
 
 
 class VideoHandler:
     def __init__(self, video_source):
         self.capture = cv.VideoCapture(video_source)
         self.pothole_cascade = cv.CascadeClassifier(
-            "app/haarcascades/cascadeBigger20.xml")
+            "app/haarcascades/cascadeBigger30.xml")
+        self.notification = SoundLoader.load("app/notification.mp3")
 
     def get_frame(self):
         ret_val, frame = self.capture.read()
@@ -14,10 +16,11 @@ class VideoHandler:
     def detect_object(self, frame):
         frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         frame_gray = cv.equalizeHist(frame_gray)
-
         potholes = self.pothole_cascade.detectMultiScale(frame_gray)
         for (x, y, w, h) in potholes:
             frame = cv.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        if len(potholes) != 0:
+            self.notification.play()
         return frame
 
 
